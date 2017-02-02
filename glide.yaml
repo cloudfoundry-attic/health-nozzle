@@ -1,0 +1,14 @@
+package: github.com/cloudfoundry-incubator/health-nozzle
+import:
+- package: github.com/cloudfoundry/noaa
+  subpackages:
+  - consumer
+- package: github.com/cloudfoundry/sonde-go
+  subpackages:
+  - events
+testImport:
+- package: github.com/gogo/protobuf
+  subpackages:
+  - proto
+- package: github.com/onsi/ginkgo
+- package: github.com/onsi/gomega
