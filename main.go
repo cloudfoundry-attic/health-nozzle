@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"os"
 	"os/signal"
-	"sync"
 	"syscall"
 
 	"github.com/cloudfoundry-incubator/health-nozzle/app"
@@ -23,15 +22,7 @@ var (
 func waitForKill() {
 	waitFor := make(chan os.Signal, 2)
 	signal.Notify(waitFor, os.Interrupt, syscall.SIGTERM)
-
-	waiter := sync.WaitGroup{}
-	waiter.Add(1)
-
-	go func() {
-		<-waitFor
-		waiter.Done()
-	}()
-	waiter.Wait()
+	<-waitFor
 }
 
 func main() {
@@ -41,7 +32,7 @@ func main() {
 	msgChan, errorChan := consumer.Firehose(firehoseSubscriptionId, authToken)
 	go func() {
 		for err := range errorChan {
-			fmt.Fprintf(os.Stderr, "%v\n", err.Error())
+			fmt.Fprintf(os.Stderr, "%s\n", err)
 		}
 	}()
 	app := app.NewApp(msgChan)
