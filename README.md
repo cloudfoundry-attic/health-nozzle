@@ -10,7 +10,7 @@ can be read via JSON api endpoint.
 git clone https://github.com/cloudfoundry-incubator/health-nozzle
 cf push health-nozzle --no-start
 cf set-env health-nozzle DOPPLER_ADDR "wss://doppler.system-domain"
-cf set-env health-nozzle CF_AUTH_TOKEN "$(cf oauth-token)"
+cf set-env health-nozzle CF_ACCESS_TOKEN "$(cf oauth-token)"
 cf start health-nozzle
 curl http://health-nozzle.system-domain
 ```
